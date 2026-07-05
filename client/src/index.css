@@ -1,0 +1,62 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0f1419;
+  --surface: #1a2332;
+  --surface-hover: #243044;
+  --border: #2d3a4f;
+  --text: #e7ecf3;
+  --text-muted: #8b9cb3;
+  --accent: #6366f1;
+  --accent-hover: #818cf8;
+  --accent-soft: rgba(99, 102, 241, 0.15);
+  --success: #34d399;
+  --danger: #f87171;
+  --own-message: #312e81;
+  --other-message: #1e293b;
+  --system: #64748b;
+  --radius: 12px;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background:
+    radial-gradient(ellipse at top left, rgba(99, 102, 241, 0.12), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(52, 211, 153, 0.08), transparent 50%),
+    var(--bg);
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+input {
+  outline: none;
+  border: none;
+}

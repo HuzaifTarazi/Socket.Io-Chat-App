@@ -1,0 +1,96 @@
+.login-screen {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  box-shadow: var(--shadow);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--accent-soft);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 1.75rem;
+}
+
+.login-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.login-header p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-form label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.login-form input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: var(--text);
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.login-form input:focus {
+  border-color: var(--accent);
+}
+
+.login-form input::placeholder {
+  color: var(--text-muted);
+}
+
+.login-error {
+  background: rgba(248, 113, 113, 0.12);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  color: var(--danger);
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+.login-form button {
+  background: var(--accent);
+  color: white;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.2s;
+  margin-top: 0.5rem;
+}
+
+.login-form button:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.login-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
