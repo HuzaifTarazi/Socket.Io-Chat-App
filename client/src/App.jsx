@@ -73,11 +73,7 @@ export default function App() {
   const handleJoin = useCallback((name, callback) => {
     setIsConnecting(true);
 
-    if (!socket.connected) {
-      socket.connect();
-    }
-
-    socket.emit("join", name, (response) => {
+    const finish = (response) => {
       setIsConnecting(false);
       if (response.success) {
         setUsername(response.username);
@@ -90,7 +86,44 @@ export default function App() {
         ]);
       }
       callback(response);
-    });
+    };
+
+    const attemptJoin = () => {
+      socket.emit("join", name, (response) => {
+        if (!response) {
+          finish({ success: false, error: "No response from server. Is it running?" });
+          return;
+        }
+        finish(response);
+      });
+    };
+
+    const timeout = setTimeout(() => {
+      socket.off("connect", onConnect);
+      socket.off("connect_error", onConnectError);
+      finish({ success: false, error: "Connection timed out. Make sure the server is running on port 3001." });
+    }, 10000);
+
+    const onConnect = () => {
+      clearTimeout(timeout);
+      socket.off("connect_error", onConnectError);
+      attemptJoin();
+    };
+
+    const onConnectError = () => {
+      clearTimeout(timeout);
+      socket.off("connect", onConnect);
+      finish({ success: false, error: "Could not connect to server. Make sure it is running on port 3001." });
+    };
+
+    if (socket.connected) {
+      clearTimeout(timeout);
+      attemptJoin();
+    } else {
+      socket.once("connect", onConnect);
+      socket.once("connect_error", onConnectError);
+      socket.connect();
+    }
   }, []);
 
   const handleSend = useCallback((text) => {

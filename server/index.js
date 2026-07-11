@@ -7,16 +7,39 @@ const app = express();
 const server = http.createServer(app);
 
 const PORT = process.env.PORT || 3001;
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:5173";
+
+function isAllowedOrigin(origin) {
+  if (!origin) return true;
+  if (process.env.CLIENT_ORIGIN) {
+    return process.env.CLIENT_ORIGIN.split(",").map((o) => o.trim()).includes(origin);
+  }
+  return /^http:\/\/localhost:\d+$/.test(origin);
+}
 
 const io = new Server(server, {
   cors: {
-    origin: CLIENT_ORIGIN,
+    origin: (origin, callback) => {
+      if (isAllowedOrigin(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST"],
   },
 });
 
-app.use(cors({ origin: CLIENT_ORIGIN }));
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (isAllowedOrigin(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 app.use(express.json());
 
 app.get("/health", (_req, res) => {
