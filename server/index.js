@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 const server = http.createServer(app);
 
-const PORT = process.env.PORT || 3001;
+const SERVERURL = process.env.SERVER_URL;
 
 function isAllowedOrigin(origin) {
   if (!origin) return true;
@@ -122,5 +122,5 @@ io.on("connection", (socket) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Chat server running on http://localhost:${PORT}`);
+  console.log(`Chat server running on ${SERVERURL}`);
 });
