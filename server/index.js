@@ -6,14 +6,15 @@ const cors = require("cors");
 const app = express();
 const server = http.createServer(app);
 
-const SERVERURL = process.env.SERVER_URL;
+const CLIENT_ORIGIN = process.env.CLINET_URL;
+const PORT = process.env.SERVER_PORT
 
 function isAllowedOrigin(origin) {
   if (!origin) return true;
-  if (process.env.CLIENT_ORIGIN) {
-    return process.env.CLIENT_ORIGIN.split(",").map((o) => o.trim()).includes(origin);
+  if (CLIENT_ORIGIN) {
+    return CLIENT_ORIGIN.split(",").map((o) => o.trim()).includes(origin);
   }
-  return /^http:\/\/localhost:\d+$/.test(origin);
+  return /^http:\/\/socket-io-chat-app-beta.vercel.app\d+$/.test(origin);
 }
 
 const io = new Server(server, {
@@ -121,6 +122,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(8080, () => {
-  console.log(`Chat server running on ${SERVERURL}`);
+server.listen(PORT, () => {
+  console.log(`Chat server running on port: ${PORT}`);
 });
