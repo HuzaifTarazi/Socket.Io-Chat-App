@@ -121,6 +121,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(PORT, () => {
+server.listen(8080, () => {
   console.log(`Chat server running on ${SERVERURL}`);
 });
